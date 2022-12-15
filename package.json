@@ -1,0 +1,9 @@
+{
+  "name": "EmotivNode",
+  "version": "1.0.0",
+  "dependencies": {
+    "emoosc": "^1.0.0",
+    "osc": "^2.4.3",
+    "ws": "^8.11.0"
+  }
+}
