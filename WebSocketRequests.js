@@ -1,5 +1,4 @@
 async function WebSocketTest() {
-
     let headsetValue;
     let headsetTime;
 
@@ -10,11 +9,9 @@ async function WebSocketTest() {
         const CREATE_SESSION_ID = 5;
         const SUB_REQUEST_ID = 6;
 
-
         let ws = new WebSocket("wss://localhost:6868/");
         let authToken="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6ImNvbS5qb2VwYi5maXJzdF90ZXN0IiwiYXBwVmVyc2lvbiI6IjEuMC4wIiwiZXhwIjoxNjcxMTM4Mzc3LCJuYmYiOjE2NzA4NzkxNzcsInVzZXJJZCI6ImYxYzViM2U4LWYyZDEtNGNlMy04Mjc0LWQ4ZTE3MTEwOWIyYSIsInVzZXJuYW1lIjoiam9lcGIiLCJ2ZXJzaW9uIjoiMi4wIn0.bmgUc0PoF2jOTPB2xBFonubt-DHiHQDbrQy2aIBxSMI";
         let sessionId="";
-
 
         let requestAccessRequest = {
             "jsonrpc": "2.0",
@@ -25,20 +22,15 @@ async function WebSocketTest() {
             },
             "id": REQUEST_ACCESS_ID
         };
-
-
         ws.onopen=await function() {
-
-
             // Web Socket is connected, send data using send()
-            //ws.send();
-            //alert("Message is sent...");
             ws.send(JSON.stringify(requestAccessRequest));
             ws.onmessage = function (data) {
                 // if(JSON.parse(data)['id']==6){
                 document.write('requestAccessRequest RESULT --------------------------------');
                 document.write(data.data.toString());
                 document.write('\r\n');
+                document.write("<br>");
                 //}
 
                 let createSessionRequest = {
@@ -58,6 +50,7 @@ async function WebSocketTest() {
                     document.write(data.data.toString());
                     sessionId = JSON.parse(data.data)['result']['id'];
                     document.write('\r\n');
+                    document.write("<br>");
                     //}
 
                     let subRequest = {
@@ -77,23 +70,23 @@ async function WebSocketTest() {
                         document.write('subscribe RESULT --------------------------------');
                         document.write(data.data.toString());
                         document.write('\r\n');
+                        document.write("<br>");
                         //}
                         ws.onmessage = function (data) {
                             // log stream data to file or console here
-
                             headsetValue=JSON.parse(data.data)["met"];
-                            headsetTime=JSON.parse(data.data)["time"];
-                            document.writeln("Values: " + headsetValue.toString());
-                            document.writeln("Time: " + headsetTime.toString());
+                            headsetTime=new Date(JSON.parse(data.data)["time"]*1000);
+                            document.write("Values: " + headsetValue.toString());
+                            document.write("<br>");
+
+                            document.write("Time: " + headsetTime.toString());
+                            document.write("<br>");
                         };
                     };
                 };
             };
 
         };
-
-
-
 
         ws.onclose = function() {
 
