@@ -1,6 +1,6 @@
 async function WebSocketTest() {
     let headsetValue;
-    let headsetTime;
+    let headsetTime=new Date();
 
     if ("WebSocket" in window) {
         //alert("WebSocket is supported by your Browser!");
@@ -75,7 +75,7 @@ async function WebSocketTest() {
                         ws.onmessage = function (data) {
                             // log stream data to file or console here
                             headsetValue=JSON.parse(data.data)["met"];
-                            headsetTime=new Date(JSON.parse(data.data)["time"]*1000);
+                            headsetTime=Date(JSON.parse(data.data)["time"]*1000);
                             document.write("Values: " + headsetValue.toString());
                             document.write("<br>");
 
